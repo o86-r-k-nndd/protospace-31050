@@ -1,5 +1,5 @@
 class PrototypesController < ApplicationController
-  before_action :move_to_toppage, except: [:index, :show, :edit]
+  before_action :move_to_toppage, except: [:index, :show ]
 
   def index
     @prototypes = Prototype.all
@@ -31,7 +31,7 @@ class PrototypesController < ApplicationController
     prototype = Prototype.find(params[:id])
     if prototype.update(prototype_params)
       @prototype = Prototype.find(params[:id])
-      redirect_to :show
+      redirect_to action: :show
     else
       render :edit
     end
@@ -50,8 +50,8 @@ class PrototypesController < ApplicationController
   end
 
   def move_to_toppage
-    unless user_signed_in? && current_user.id == @prototype.user_id
-      redirect_to action: :index
+    unless user_signed_in?
+      redirect_to root_path
     end
   end
 
